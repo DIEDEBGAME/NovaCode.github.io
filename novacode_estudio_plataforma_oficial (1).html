@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaCode ESTUDIO - Soluciones Digitales & Diseño Corporativo</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#0F2557',
+                            cyan: '#00A8E8',
+                            orange: '#FF6B00',
+                            dark: '#0B132B',
+                            light: '#F8FAFC'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-logo-star {
+            background: linear-gradient(135deg, #00A8E8 0%, #0F2557 50%, #FF6B00 100%);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #00A8E8, #FF6B00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .bg-glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+        }
+        .dark .bg-glass {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased font-sans min-h-screen flex flex-col selection:bg-brand-cyan selection:text-white">
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- LOGO BRAND -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('presentacion')">
+                <div class="relative w-11 h-11 flex items-center justify-center">
+                    <!-- Dynamic SVG Logo mimicking uploaded image -->
+                    <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
+                        <defs>
+                            <linearGradient id="starGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#00A8E8" />
+                                <stop offset="50%" stop-color="#0F52BA" />
+                                <stop offset="100%" stop-color="#FF6B00" />
+                            </linearGradient>
+                            <linearGradient id="arrowGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#00D2FF" />
+                                <stop offset="100%" stop-color="#0072FF" />
+                            </linearGradient>
+                        </defs>
+                        <!-- Star Base -->
+                        <path d="M50 5 L63 35 L95 38 L71 60 L78 92 L50 75 L22 92 L29 60 L5 38 L37 35 Z" fill="url(#starGradient)"/>
+                        <!-- Dynamic Upward Arrow overlay -->
+                        <path d="M25 65 L45 35 L60 50 L85 15 L85 30 L60 62 L45 47 L30 72 Z" fill="url(#arrowGradient)"/>
+                    </svg>
+                </div>
+                <div>
+                    <span class="text-2xl font-extrabold tracking-tight text-slate-900 block leading-none">
+                        NovaCode
+                    </span>
+                    <span class="text-xs font-semibold tracking-widest text-brand-cyan uppercase block mt-0.5">
+                        ESTUDIO
+                    </span>
+                </div>
+            </div>
+
+            <!-- NAVIGATION TABS -->
+            <nav class="hidden md:flex space-x-1 bg-slate-100 p-1.5 rounded-xl border border-slate-200/80">
+                <button id="nav-presentacion" onclick="switchTab('presentacion')" class="px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 text-brand-blue bg-white shadow-sm">
+                    <i class="fa-solid fa-building-columns mr-2"></i>Presentación
+                </button>
+                <button id="nav-catalogo" onclick="switchTab('catalogo')" class="px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 text-slate-600 hover:text-slate-900">
+                    <i class="fa-solid fa-layer-group mr-2"></i>Catálogo de Servicios
+                </button>
+                <button id="nav-carrito" onclick="switchTab('carrito')" class="px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 text-slate-600 hover:text-slate-900 relative">
+                    <i class="fa-solid fa-cart-shopping mr-2"></i>Mi Pedido
+                    <span id="cart-badge" class="hidden absolute -top-1 -right-1 bg-brand-orange text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-pulse">0</span>
+                </button>
+            </nav>
+
+            <!-- MOBILE CART BUTTON & MENU TOGGLE -->
+            <div class="flex items-center space-x-3 md:hidden">
+                <button onclick="switchTab('carrito')" class="relative p-2.5 text-slate-700 hover:bg-slate-100 rounded-lg">
+                    <i class="fa-solid fa-cart-shopping text-xl"></i>
+                    <span id="cart-badge-mobile" class="hidden absolute top-1 right-1 bg-brand-orange text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">0</span>
+                </button>
+                <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="p-2.5 text-slate-700 hover:bg-slate-100 rounded-lg">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- MOBILE MENU DROPDOWN -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-4 space-y-2">
+            <button onclick="switchTab('presentacion'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg font-medium text-slate-700 hover:bg-slate-50 flex items-center">
+                <i class="fa-solid fa-building-columns w-6 text-brand-cyan"></i> Presentación
+            </button>
+            <button onclick="switchTab('catalogo'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg font-medium text-slate-700 hover:bg-slate-50 flex items-center">
+                <i class="fa-solid fa-layer-group w-6 text-brand-cyan"></i> Catálogo de Servicios
+            </button>
+            <button onclick="switchTab('carrito'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-lg font-medium text-slate-700 hover:bg-slate-50 flex items-center justify-between">
+                <span><i class="fa-solid fa-cart-shopping w-6 text-brand-cyan"></i> Mi Pedido</span>
+                <span id="cart-badge-menu" class="bg-brand-orange text-white text-xs px-2 py-0.5 rounded-full font-bold">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- SECTION 1: PRESENTACIÓN -->
+        <section id="sec-presentacion" class="space-y-12 animate-fade-in">
+            <!-- Hero Banner -->
+            <div class="relative overflow-hidden rounded-3xl bg-slate-900 text-white p-8 sm:p-12 lg:p-16 shadow-2xl border border-slate-800">
+                <div class="absolute -top-24 -right-24 w-96 h-96 bg-brand-cyan/20 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-brand-orange/20 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <div class="relative z-10 max-w-3xl space-y-6">
+                    <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs font-semibold uppercase tracking-wider text-brand-cyan">
+                        <i class="fa-solid fa-award"></i>
+                        <span>Estudio Profesional de Tecnología & Diseño</span>
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-none">
+                        Transformamos Ideas en <span class="text-gradient">Experiencias Digitales</span> de Alto Impacto.
+                    </h1>
+                    <p class="text-lg text-slate-300 font-light leading-relaxed">
+                        En <strong class="text-white font-semibold">NovaCode ESTUDIO</strong> desarrollamos ecosistemas digitales a la medida, diseño identitario de vanguardia, producción audiovisual e infraestructura informática integral para empresas que buscan liderar su sector.
+                    </p>
+                    <div class="pt-4 flex flex-wrap gap-4">
+                        <button onclick="switchTab('catalogo')" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-brand-cyan to-blue-600 text-white font-bold shadow-lg shadow-brand-cyan/25 hover:shadow-brand-cyan/40 hover:scale-[1.02] transition-all">
+                            Explorar Servicios <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </button>
+                        <button onclick="switchTab('carrito')" class="px-7 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold backdrop-blur-md border border-white/20 transition-all">
+                            Solicitar Cotización
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pillars / About Us Grid -->
+            <div>
+                <div class="text-center max-w-2xl mx-auto mb-10 space-y-2">
+                    <h2 class="text-3xl font-bold text-slate-900">Nuestros Pilares de Excelencia</h2>
+                    <p class="text-slate-600">Integración multidisciplinaria orientada a maximizar el rendimiento visual y tecnológico de su organización.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Pillar 1 -->
+                    <div class="bg-white p-8 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow space-y-4">
+                        <div class="w-14 h-14 rounded-xl bg-blue-50 text-brand-cyan flex items-center justify-center text-2xl font-bold">
+                            <i class="fa-solid fa-code"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900">Desarrollo & Sistemas</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Programación robusta de plataformas web, arquitecturas de bases de datos avanzadas y aplicaciones móviles orientadas a la optimización operativa.
+                        </p>
+                    </div>
+
+                    <!-- Pillar 2 -->
+                    <div class="bg-white p-8 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow space-y-4">
+                        <div class="w-14 h-14 rounded-xl bg-orange-50 text-brand-orange flex items-center justify-center text-2xl font-bold">
+                            <i class="fa-solid fa-pen-nib"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900">Diseño & Branding</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Construcción estratégica de identidad visual corporativa, material publicitario editorial de alta resolución y conceptualización de mercancía de marca.
+                        </p>
+                    </div>
+
+                    <!-- Pillar 3 -->
+                    <div class="bg-white p-8 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow space-y-4">
+                        <div class="w-14 h-14 rounded-xl bg-cyan-50 text-brand-blue flex items-center justify-center text-2xl font-bold">
+                            <i class="fa-solid fa-microchip"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900">Soporte TI & Multimedia</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Mantenimiento preventivo y correctivo de hardware de precisión, junto con producción audiovisual dinámica adaptada a canales de comunicación contemporáneos.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Corporate Values Banner -->
+            <div class="bg-slate-100 rounded-2xl p-8 border border-slate-200 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="space-y-1">
+                    <h4 class="text-lg font-bold text-slate-900">¿Requiere un proyecto a la medida?</h4>
+                    <p class="text-sm text-slate-600">Ofrecemos cotizaciones personalizadas adaptadas estrictamente a los requerimientos técnicos de su negocio.</p>
+                </div>
+                <button onclick="switchTab('catalogo')" class="px-6 py-3 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-xl transition-colors whitespace-nowrap">
+                    Ir al Catálogo de Cotización
+                </button>
+            </div>
+        </section>
+
+        <!-- SECTION 2: CATÁLOGO DE SERVICIOS -->
+        <section id="sec-catalogo" class="hidden space-y-8 animate-fade-in">
+            <!-- Header Catalog -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-6">
+                <div>
+                    <h1 class="text-3xl font-extrabold text-slate-900">Catálogo de Servicios & Productos</h1>
+                    <p class="text-slate-600 mt-1">Seleccione los ítems requeridos, configure las cantidades y añádalos a su cotización.</p>
+                </div>
+                <!-- Category Filters -->
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="filterCategory('all')" class="cat-filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-brand-blue text-white shadow-sm" data-cat="all">Todos</button>
+                    <button onclick="filterCategory('web')" class="cat-filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-slate-200 text-slate-700 hover:bg-slate-300" data-cat="web">Desarrollo Web & Apps</button>
+                    <button onclick="filterCategory('impresos')" class="cat-filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-slate-200 text-slate-700 hover:bg-slate-300" data-cat="impresos">Impresos Físicos</button>
+                    <button onclick="filterCategory('diseno')" class="cat-filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-slate-200 text-slate-700 hover:bg-slate-300" data-cat="diseno">Diseño & Merch</button>
+                    <button onclick="filterCategory('video')" class="cat-filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-slate-200 text-slate-700 hover:bg-slate-300" data-cat="video">Video & Multimedia</button>
+                    <button onclick="filterCategory('soporte')" class="cat-filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-slate-200 text-slate-700 hover:bg-slate-300" data-cat="soporte">Soporte Informático</button>
+                </div>
+            </div>
+
+            <!-- CATALOG GRID -->
+            <div id="catalog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Injected via JavaScript -->
+            </div>
+        </section>
+
+        <!-- SECTION 3: CARRITO DE COMPRAS / PEDIDO -->
+        <section id="sec-carrito" class="hidden space-y-8 animate-fade-in">
+            <div>
+                <h1 class="text-3xl font-extrabold text-slate-900">Resumen de Cotización / Pedido</h1>
+                <p class="text-slate-600 mt-1">Revise el desglose de ítems seleccionados y envíe su pedido directamente a nuestro equipo.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- CART ITEMS LIST -->
+                <div class="lg:col-span-2 space-y-4">
+                    <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+                        <div class="px-6 py-4 bg-slate-50 border-b border-slate-200 flex justify-between items-center">
+                            <h2 class="font-bold text-slate-800">Servicios Seleccionados</h2>
+                            <button onclick="clearCart()" class="text-xs font-semibold text-rose-600 hover:text-rose-800 transition-colors">
+                                <i class="fa-solid fa-trash-can mr-1"></i>Vaciar Carrito
+                            </button>
+                        </div>
+                        
+                        <div id="cart-items-container" class="divide-y divide-slate-100 p-6 space-y-4">
+                            <!-- Injected via JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ORDER SUMMARY CARD -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm sticky top-28 space-y-6">
+                        <h2 class="text-lg font-bold text-slate-900 border-b border-slate-100 pb-3">Detalle Financiero</h2>
+
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between text-slate-600">
+                                <span>Subtotal de Servicios</span>
+                                <span id="summary-subtotal" class="font-semibold text-slate-800">$0.00 MXN</span>
+                            </div>
+                            <div class="flex justify-between text-slate-600">
+                                <span>Gastos de Gestión / Envío</span>
+                                <span class="font-semibold text-emerald-600">Por definir en confirmación</span>
+                            </div>
+                            <div class="border-t border-slate-100 pt-3 flex justify-between items-center">
+                                <span class="text-base font-bold text-slate-900">Total Estimado</span>
+                                <span id="summary-total" class="text-2xl font-extrabold text-brand-blue">$0.00 MXN</span>
+                            </div>
+                        </div>
+
+                        <!-- Customer Details Form -->
+                        <div class="space-y-3 pt-2">
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500">Datos de Contacto del Cliente</label>
+                            <input type="text" id="client-name" placeholder="Nombre completo o Empresa" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-brand-cyan focus:outline-none">
+                            <input type="text" id="client-notes" placeholder="Notas adicionales o requerimientos (opcional)" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-brand-cyan focus:outline-none">
+                        </div>
+
+                        <!-- Submit Order Buttons -->
+                        <div class="space-y-3">
+                            <button onclick="sendOrderFacebook()" class="w-full py-3.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg shadow-blue-600/20 flex items-center justify-center space-x-2 transition-all">
+                                <i class="fa-brands fa-facebook-messenger text-xl"></i>
+                                <span>Enviar Pedido por Facebook</span>
+                            </button>
+                            <button onclick="copyOrderSummary()" class="w-full py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-sm transition-colors flex items-center justify-center space-x-2">
+                                <i class="fa-regular fa-copy"></i>
+                                <span>Copiar Resumen de Pedido</span>
+                            </button>
+                        </div>
+
+                        <p class="text-xs text-slate-400 text-center">
+                            Al presionar "Enviar Pedido por Facebook", se copiará automáticamente el desglose a tu portapapeles y serás redirigido al chat de Diego Roldan para pegarlo y confirmarlo.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 mt-16 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="space-y-4 md:col-span-2">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-r from-brand-cyan to-brand-orange flex items-center justify-center text-white font-bold">
+                        N
+                    </div>
+                    <span class="text-xl font-bold text-white tracking-tight">NovaCode ESTUDIO</span>
+                </div>
+                <p class="text-sm text-slate-400 max-w-sm">
+                    Estudio integral de soluciones digitales, desarrollo de software, diseño de identidad de marca y mantenimiento técnico corporativo.
+                </p>
+            </div>
+
+            <div>
+                <h4 class="text-white text-sm font-bold uppercase tracking-wider mb-4">Servicios Clave</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" onclick="switchTab('catalogo')" class="hover:text-brand-cyan transition-colors">Desarrollo Web & Apps</a></li>
+                    <li><a href="#" onclick="switchTab('catalogo')" class="hover:text-brand-cyan transition-colors">Branding & Identidad</a></li>
+                    <li><a href="#" onclick="switchTab('catalogo')" class="hover:text-brand-cyan transition-colors">Producción Audiovisual</a></li>
+                    <li><a href="#" onclick="switchTab('catalogo')" class="hover:text-brand-cyan transition-colors">Soporte Informático</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white text-sm font-bold uppercase tracking-wider mb-4">Contacto Directo</h4>
+                <p class="text-sm text-slate-400">Atención personalizada y cotizaciones formales para proyectos corporativos.</p>
+                <div class="mt-3 flex space-x-3 text-lg text-slate-300">
+                    <a href="#" class="hover:text-brand-cyan"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" class="hover:text-brand-cyan"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-brand-cyan"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 pt-8 border-t border-slate-800 text-xs text-center text-slate-500">
+            &copy; 2026 NovaCode ESTUDIO / NovaCode HORIZON. Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <!-- NOTIFICATION TOAST -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl border border-slate-700 flex items-center space-x-3 translate-y-20 opacity-0 transition-all duration-300 z-50">
+        <i id="toast-icon" class="fa-solid fa-circle-check text-brand-cyan text-lg"></i>
+        <span id="toast-message" class="text-sm font-medium">Notificación</span>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // DATA: PRODUCTS & SERVICES CATALOG
+        const catalogProducts = [
+            // WEB & APPS
+            {
+                id: 'web-landing',
+                name: 'Página Web Informativa / Landing Page',
+                category: 'web',
+                price: 1800,
+                unitType: 'servicio',
+                isPhysical: false,
+                desc: 'Diseño 100% personalizable, optimizado para conversión, respuesta adaptativa para móviles y estructura corporativa.',
+                icon: 'fa-globe'
+            },
+            {
+                id: 'web-system',
+                name: 'Página Web con Base de Datos / Sistema',
+                category: 'web',
+                price: 10000,
+                unitType: 'servicio',
+                isPhysical: false,
+                desc: 'Plataforma a la medida con panel de administración, autenticación de usuarios, gestión de registros y backend de alto rendimiento.',
+                icon: 'fa-database'
+            },
+            {
+                id: 'app-mobile',
+                name: 'Desarrollo de Aplicación Móvil (App)',
+                category: 'web',
+                price: 4000,
+                unitType: 'servicio',
+                isPhysical: false,
+                desc: 'Aplicación nativa o multiplataforma enfocada en la experiencia de usuario y digitalización de servicios.',
+                icon: 'fa-mobile-screen-button'
+            },
+            {
+                id: 'web-maintenance',
+                name: 'Mantenimiento y Actualización Web/App',
+                category: 'web',
+                price: 2000,
+                unitType: 'mes',
+                isPhysical: false,
+                desc: 'Servicio recurrente mensual de monitoreo, respaldos de seguridad, parches y optimización de rendimiento.',
+                icon: 'fa-arrows-rotate'
+            },
+
+            // IMPRESOS FÍSICOS
+            {
+                id: 'print-cards',
+                name: 'Tarjetas de Presentación Impresas',
+                category: 'impresos',
+                price: 10,
+                unitType: 'unidad',
+                isPhysical: true,
+                minQty: 100,
+                stepQty: 50,
+                desc: 'Incluye diseño conceptual e impresión física en papel de alta resolución con acabados profesionales.',
+                icon: 'fa-id-card'
+            },
+            {
+                id: 'print-brochures',
+                name: 'Trípticos / Folletos Impresos',
+                category: 'impresos',
+                price: 30,
+                unitType: 'unidad',
+                isPhysical: true,
+                minQty: 50,
+                stepQty: 25,
+                desc: 'Diseño e impresión gráfica doblada en alta definición en papel satinado de alta calidad.',
+                icon: 'fa-book-open'
+            },
+            {
+                id: 'print-flyers',
+                name: 'Menús / Volantes Impresos',
+                category: 'impresos',
+                price: 80,
+                unitType: 'unidad',
+                isPhysical: true,
+                minQty: 25,
+                stepQty: 10,
+                desc: 'Material promocional impreso a full color, idóneo para presentaciones gastronómicas o comerciales.',
+                icon: 'fa-file-lines'
+            },
+
+            // DISEÑO & MERCH
+            {
+                id: 'design-logo',
+                name: 'Diseño de Logo e Identidad de Marca',
+                category: 'diseno',
+                price: 1500,
+                unitType: 'proyecto',
+                isPhysical: false,
+                desc: 'Creación de marca, manual de uso tipográfico, paleta cromática y archivos vectoriales de alta resolución.',
+                icon: 'fa-palette'
+            },
+            {
+                id: 'design-shirts',
+                name: 'Diseño para Playeras / Sudaderas',
+                category: 'diseno',
+                price: 250,
+                unitType: 'diseño',
+                isPhysical: false,
+                desc: 'Arte gráfico original adaptado para estampación, serigrafía o impresión textil en alta definición.',
+                icon: 'fa-shirt'
+            },
+            {
+                id: 'design-mugs',
+                name: 'Diseño para Tazas',
+                category: 'diseno',
+                price: 150,
+                unitType: 'diseño',
+                isPhysical: false,
+                desc: 'Maquetación gráfica optimizada para sublimación cilíndrica.',
+                icon: 'fa-mug-hot'
+            },
+            {
+                id: 'design-thermos',
+                name: 'Diseño para Termos',
+                category: 'diseno',
+                price: 150,
+                unitType: 'diseño',
+                isPhysical: false,
+                desc: 'Adaptación gráfica de alta calidad técnica para termos metálicos o cerámicos.',
+                icon: 'fa-glass-water'
+            },
+            {
+                id: 'design-keychains',
+                name: 'Diseño para Llaveros / Pines',
+                category: 'diseno',
+                price: 70,
+                unitType: 'diseño',
+                isPhysical: false,
+                desc: 'Archivo vectorial preparado para grabado láser, corte acrílico o molde impreso.',
+                icon: 'fa-key'
+            },
+
+            // VIDEO & MULTIMEDIA
+            {
+                id: 'video-short',
+                name: 'Edición de Video Corto (Reels / TikToks)',
+                category: 'video',
+                price: 300,
+                unitType: 'video',
+                isPhysical: false,
+                desc: 'Edición dinámica de alto impacto en formato vertical con subtítulos animados y diseño de sonido.',
+                icon: 'fa-film'
+            },
+            {
+                id: 'video-pack-shorts',
+                name: 'Paquete de 10 Videos Cortos para Redes',
+                category: 'video',
+                price: 2500,
+                unitType: 'paquete',
+                isPhysical: false,
+                desc: 'Producción continua de 10 piezas audiovisuales cortas orientadas al crecimiento en redes sociales.',
+                icon: 'fa-clapperboard'
+            },
+            {
+                id: 'video-long',
+                name: 'Edición de Video Largo (YouTube / Podcasts)',
+                category: 'video',
+                price: 3000,
+                unitType: 'video',
+                isPhysical: false,
+                desc: 'Tratamiento multicámara, limpieza de audio profesional, corrección de color y gráficos en pantalla.',
+                icon: 'fa-video'
+            },
+            {
+                id: 'video-corp',
+                name: 'Video Promocional Corporativo',
+                category: 'video',
+                price: 3000,
+                unitType: 'proyecto',
+                isPhysical: false,
+                desc: 'Producción audiovisual publicitaria con enfoque en la narrativa institucional de la empresa.',
+                icon: 'fa-building'
+            },
+
+            // SOPORTE INFORMÁTICO
+            {
+                id: 'support-pc-clean',
+                name: 'Limpieza Física de PC de Escritorio',
+                category: 'soporte',
+                price: 500,
+                unitType: 'equipo',
+                isPhysical: false,
+                desc: 'Limpieza interna de gabinete, sustitución de pasta térmica, desintoxicación de polvo y lubricación de ventiladores.',
+                icon: 'fa-desktop'
+            },
+            {
+                id: 'support-peripherals',
+                name: 'Limpieza Física de Teclado y Mouse',
+                category: 'soporte',
+                price: 250,
+                unitType: 'set',
+                isPhysical: false,
+                desc: 'Mantenimiento higiénico profundo y desinfección de periféricos mecánicos o de membrana.',
+                icon: 'fa-keyboard'
+            },
+            {
+                id: 'support-pc-full-pack',
+                name: 'Paquete Limpieza Completa (PC + Periféricos)',
+                category: 'soporte',
+                price: 700,
+                unitType: 'paquete',
+                isPhysical: false,
+                desc: 'Servicio integral que abarca el gabinete de escritorio completo junto a su teclado y mouse.',
+                icon: 'fa-gears'
+            },
+            {
+                id: 'support-os-format',
+                name: 'Formateo e Instalación de Sistema Operativo',
+                category: 'soporte',
+                price: 500,
+                unitType: 'servicio',
+                isPhysical: false,
+                desc: 'Reinstalación limpia de SO, instalación de controladores oficiales y suite básica de productividad.',
+                icon: 'fa-compact-disc'
+            }
+        ];
+
+        // STATE MANAGEMENT
+        let cart = [];
+
+        // INITIALIZATION
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCatalog(catalogProducts);
+            updateCartUI();
+        });
+
+        // TAB SWITCHING
+        function switchTab(tabId) {
+            ['presentacion', 'catalogo', 'carrito'].forEach(id => {
+                const sec = document.getElementById(`sec-${id}`);
+                const nav = document.getElementById(`nav-${id}`);
+                if (id === tabId) {
+                    sec.classList.remove('hidden');
+                    if (nav) {
+                        nav.classList.add('bg-white', 'text-brand-blue', 'shadow-sm');
+                        nav.classList.remove('text-slate-600');
+                    }
+                } else {
+                    sec.classList.add('hidden');
+                    if (nav) {
+                        nav.classList.remove('bg-white', 'text-brand-blue', 'shadow-sm');
+                        nav.classList.add('text-slate-600');
+                    }
+                }
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // MOBILE MENU TOGGLE
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // RENDER CATALOG GRID
+        function renderCatalog(products) {
+            const grid = document.getElementById('catalog-grid');
+            grid.innerHTML = '';
+
+            products.forEach(prod => {
+                const isPhysical = prod.isPhysical;
+                const minQty = prod.minQty || 1;
+                const stepQty = prod.stepQty || 1;
+
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl border border-slate-200/80 p-6 flex flex-col justify-between hover:border-brand-cyan/50 hover:shadow-lg transition-all duration-300 group";
+                
+                card.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="w-12 h-12 rounded-xl bg-slate-100 group-hover:bg-cyan-50 text-slate-700 group-hover:text-brand-cyan flex items-center justify-center text-xl transition-colors">
+                                <i class="fa-solid ${prod.icon}"></i>
+                            </div>
+                            <span class="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-slate-100 text-slate-600">
+                                ${prod.category}
+                            </span>
+                        </div>
+
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-lg group-hover:text-brand-blue transition-colors">${prod.name}</h3>
+                            <p class="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">${prod.desc}</p>
+                        </div>
+
+                        <div class="text-2xl font-extrabold text-slate-900">
+                            $${prod.price.toLocaleString('es-MX')} <span class="text-xs font-medium text-slate-500">MXN / ${prod.unitType}</span>
+                        </div>
+                    </div>
+
+                    <div class="pt-6 border-t border-slate-100 mt-6 space-y-3">
+                        ${isPhysical ? `
+                            <div class="flex items-center justify-between bg-slate-50 p-1.5 rounded-xl border border-slate-200">
+                                <span class="text-xs font-semibold text-slate-600 pl-2">Cantidad:</span>
+                                <div class="flex items-center space-x-1">
+                                    <button onclick="adjustInputQty('${prod.id}', -${stepQty})" class="w-7 h-7 bg-white rounded-lg border border-slate-300 text-slate-700 font-bold hover:bg-slate-100 text-sm flex items-center justify-center">-</button>
+                                    <input type="number" id="qty-${prod.id}" value="${minQty}" min="${minQty}" step="${stepQty}" class="w-14 text-center text-xs font-bold bg-transparent border-none focus:outline-none text-slate-800">
+                                    <button onclick="adjustInputQty('${prod.id}', ${stepQty})" class="w-7 h-7 bg-white rounded-lg border border-slate-300 text-slate-700 font-bold hover:bg-slate-100 text-sm flex items-center justify-center">+</button>
+                                </div>
+                            </div>
+                        ` : ''}
+
+                        <button onclick="addToCart('${prod.id}')" class="w-full py-3 px-4 rounded-xl bg-slate-900 hover:bg-brand-cyan text-white font-bold text-sm transition-all duration-200 flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-cart-plus"></i>
+                            <span>Añadir al Carrito</span>
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // FILTER CATALOG CATEGORIES
+        function filterCategory(cat) {
+            document.querySelectorAll('.cat-filter-btn').forEach(btn => {
+                if (btn.getAttribute('data-cat') === cat) {
+                    btn.className = "cat-filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-brand-blue text-white shadow-sm";
+                } else {
+                    btn.className = "cat-filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-slate-200 text-slate-700 hover:bg-slate-300";
+                }
+            });
+
+            if (cat === 'all') {
+                renderCatalog(catalogProducts);
+            } else {
+                const filtered = catalogProducts.filter(p => p.category === cat);
+                renderCatalog(filtered);
+            }
+        }
+
+        // INPUT QUANTITY ADJUSTMENT FOR PHYSICAL PRODUCTS
+        function adjustInputQty(prodId, delta) {
+            const input = document.getElementById(`qty-${prodId}`);
+            if (!input) return;
+            const current = parseInt(input.value) || 0;
+            const min = parseInt(input.min) || 1;
+            let val = current + delta;
+            if (val < min) val = min;
+            input.value = val;
+        }
+
+        // ADD ITEM TO CART
+        function addToCart(prodId) {
+            const product = catalogProducts.find(p => p.id === prodId);
+            if (!product) return;
+
+            let qty = 1;
+            if (product.isPhysical) {
+                const qtyInput = document.getElementById(`qty-${prodId}`);
+                if (qtyInput) qty = parseInt(qtyInput.value) || product.minQty || 1;
+            }
+
+            const existingIndex = cart.findIndex(item => item.id === prodId);
+            if (existingIndex > -1) {
+                cart[existingIndex].qty += qty;
+            } else {
+                cart.push({
+                    ...product,
+                    qty: qty
+                });
+            }
+
+            updateCartUI();
+            showToast(`Añadido: ${product.name}`);
+        }
+
+        // UPDATE CART QUANTITY IN CART VIEW
+        function updateCartItemQty(prodId, newQty) {
+            const index = cart.findIndex(item => item.id === prodId);
+            if (index > -1) {
+                if (newQty <= 0) {
+                    cart.splice(index, 1);
+                } else {
+                    cart[index].qty = newQty;
+                }
+                updateCartUI();
+            }
+        }
+
+        // CLEAR ENTIRE CART
+        function clearCart() {
+            cart = [];
+            updateCartUI();
+            showToast("Carrito vaciado");
+        }
+
+        // GENERATE ORDER AND REDIRECT TO FACEBOOK MESSENGER
+        function sendOrderFacebook() {
+            if (cart.length === 0) {
+                showToast("El carrito está vacío", "error");
+                return;
+            }
+
+            const clientName = document.getElementById('client-name').value.trim() || 'Cliente General';
+            const clientNotes = document.getElementById('client-notes').value.trim();
+
+            let summaryText = `*SOLICITUD DE COTIZACIÓN - NOVACODE ESTUDIO*\n`;
+            summaryText += `--------------------------------------\n`;
+            summaryText += `*Cliente / Empresa:* ${clientName}\n\n`;
+            summaryText += `*DESGLOSE DE SERVICIOS:*\n`;
+
+            let total = 0;
+            cart.forEach((item, index) => {
+                const sub = item.price * item.qty;
+                total += sub;
+                summaryText += `${index + 1}. *${item.name}*\n   Cantidad: ${item.qty} ${item.unitType}(s) | Subtotal: $${sub.toLocaleString('es-MX')} MXN\n`;
+            });
+
+            summaryText += `\n*TOTAL ESTIMADO:* $${total.toLocaleString('es-MX')} MXN\n`;
+            if (clientNotes) {
+                summaryText += `*Requerimientos especiales:* ${clientNotes}\n`;
+            }
+            summaryText += `--------------------------------------\n`;
+            summaryText += `Quedo a la espera de la confirmación del pedido.`;
+
+            // Copy to clipboard
+            navigator.clipboard.writeText(summaryText).then(() => {
+                showToast("¡Pedido copiado al portapapeles! Redirigiendo a Facebook...");
+                
+                // Redirection after short delay so user sees toast
+                setTimeout(() => {
+                    // Direct Facebook profile link
+                    window.open('https://www.facebook.com/profile.php', '_blank');
+                }, 1200);
+            }).catch(() => {
+                // Fallback attempt
+                showToast("Redirigiendo a Facebook...", "success");
+                window.open('https://www.facebook.com/profile.php', '_blank');
+            });
+        }
+
+        // UPDATE CART UI INTERFACE
+        function updateCartUI() {
+            // Badges
+            const totalItemsCount = cart.reduce((sum, item) => sum + (item.isPhysical ? 1 : item.qty), 0);
+            const badgeDesktop = document.getElementById('cart-badge');
+            const badgeMobile = document.getElementById('cart-badge-mobile');
+            const badgeMenu = document.getElementById('cart-badge-menu');
+
+            [badgeDesktop, badgeMobile, badgeMenu].forEach(badge => {
+                if (badge) {
+                    badge.innerText = cart.length;
+                    if (cart.length > 0) {
+                        badge.classList.remove('hidden');
+                    } else {
+                        badge.classList.add('hidden');
+                    }
+                }
+            });
+
+            // Cart list container
+            const container = document.getElementById('cart-items-container');
+            if (!container) return;
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="py-12 text-center space-y-4">
+                        <div class="w-16 h-16 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center mx-auto text-2xl">
+                            <i class="fa-solid fa-cart-flatbed"></i>
+                        </div>
+                        <div class="space-y-1">
+                            <p class="text-slate-800 font-bold">Su carrito se encuentra vacío</p>
+                            <p class="text-xs text-slate-500">Explore nuestro catálogo para agregar servicios a la cotización.</p>
+                        </div>
+                        <button onclick="switchTab('catalogo')" class="px-5 py-2.5 bg-brand-blue text-white rounded-xl text-xs font-bold">
+                            Ir al Catálogo
+                        </button>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = '';
+                cart.forEach(item => {
+                    const subtotal = item.price * item.qty;
+                    const row = document.createElement('div');
+                    row.className = "flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100 last:border-none";
+                    row.innerHTML = `
+                        <div class="flex items-start space-x-3">
+                            <div class="w-10 h-10 rounded-lg bg-cyan-50 text-brand-cyan flex items-center justify-center text-lg mt-0.5">
+                                <i class="fa-solid ${item.icon}"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">${item.name}</h4>
+                                <p class="text-xs text-slate-500">$${item.price.toLocaleString('es-MX')} MXN por ${item.unitType}</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between sm:justify-end space-x-6">
+                            <div class="flex items-center space-x-2 bg-slate-100 rounded-lg p-1 border border-slate-200">
+                                <button onclick="updateCartItemQty('${item.id}', ${item.qty - (item.stepQty || 1)})" class="w-6 h-6 bg-white rounded font-bold text-xs text-slate-700 hover:bg-slate-200">-</button>
+                                <span class="text-xs font-bold text-slate-800 w-8 text-center">${item.qty}</span>
+                                <button onclick="updateCartItemQty('${item.id}', ${item.qty + (item.stepQty || 1)})" class="w-6 h-6 bg-white rounded font-bold text-xs text-slate-700 hover:bg-slate-200">+</button>
+                            </div>
+
+                            <div class="text-right min-w-[90px]">
+                                <span class="font-bold text-slate-900 text-sm block">$${subtotal.toLocaleString('es-MX')} MXN</span>
+                                <button onclick="updateCartItemQty('${item.id}', 0)" class="text-[10px] text-rose-500 hover:underline">Eliminar</button>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(row);
+                });
+            }
+
+            // Calculations
+            const totalSum = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            document.getElementById('summary-subtotal').innerText = `$${totalSum.toLocaleString('es-MX')} MXN`;
+            document.getElementById('summary-total').innerText = `$${totalSum.toLocaleString('es-MX')} MXN`;
+        }
+
+        // GENERATE ORDER WHATSAPP LINK
+        function sendOrderWhatsApp() {
+            if (cart.length === 0) {
+                showToast("El carrito está vacío", "error");
+                return;
+            }
+
+            const clientName = document.getElementById('client-name').value.trim() || 'Cliente General';
+            const clientNotes = document.getElementById('client-notes').value.trim();
+
+            let message = `*SOLICITUD DE COTIZACIÓN - NOVACODE ESTUDIO*\n`;
+            message += `--------------------------------------\n`;
+            message += `*Cliente / Empresa:* ${clientName}\n\n`;
+            message += `*DESGLOSE DE SERVICIOS:* \n`;
+
+            let total = 0;
+            cart.forEach((item, index) => {
+                const sub = item.price * item.qty;
+                total += sub;
+                message += `${index + 1}. *${item.name}*\n   Cantidad: ${item.qty} ${item.unitType}(s) | Subtotal: $${sub.toLocaleString('es-MX')} MXN\n`;
+            });
+
+            message += `\n*TOTAL ESTIMADO:* $${total.toLocaleString('es-MX')} MXN\n`;
+            if (clientNotes) {
+                message += `*Requerimientos especiales:* ${clientNotes}\n`;
+            }
+            message += `--------------------------------------\n`;
+            message += `Quedo a la espera de la confirmación formal del pedido.`;
+
+            const encodedMessage = encodeURIComponent(message);
+            // Replace with target WhatsApp Phone Number if available
+            window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');
+        }
+
+        // COPY SUMMARY TO CLIPBOARD
+        function copyOrderSummary() {
+            if (cart.length === 0) {
+                showToast("El carrito está vacío", "error");
+                return;
+            }
+
+            const clientName = document.getElementById('client-name').value.trim() || 'Cliente General';
+            let summaryText = `RESUMEN DE PEDIDO - NOVACODE ESTUDIO\nCliente: ${clientName}\n\n`;
+
+            let total = 0;
+            cart.forEach(item => {
+                const sub = item.price * item.qty;
+                total += sub;
+                summaryText += `- ${item.name} (x${item.qty} ${item.unitType}): $${sub.toLocaleString('es-MX')} MXN\n`;
+            });
+            summaryText += `\nTOTAL ESTIMADO: $${total.toLocaleString('es-MX')} MXN`;
+
+            navigator.clipboard.writeText(summaryText).then(() => {
+                showToast("Resumen copiado al portapapeles");
+            }).catch(() => {
+                showToast("Error al copiar resumen", "error");
+            });
+        }
+
+        // TOAST NOTIFICATION UTILITY
+        function showToast(message, type = "success") {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            const toastIcon = document.getElementById('toast-icon');
+
+            toastMsg.innerText = message;
+            if (type === "error") {
+                toastIcon.className = "fa-solid fa-triangle-exclamation text-rose-500 text-lg";
+            } else {
+                toastIcon.className = "fa-solid fa-circle-check text-brand-cyan text-lg";
+            }
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
